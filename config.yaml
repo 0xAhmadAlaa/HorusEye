@@ -1,0 +1,22 @@
+log_file_path: logs/auth.log
+rules_file_path: rules/rules.json
+report_output_path: reports/incident_report
+realtime_mode: False
+realtime_interval_seconds: 5
+
+api_keys:
+  abuseipdb: ABUSEIPDB_API_KEY  # Replace with actual AbuseIPDB API key
+  virustotal: VIRUSTOTAL_API_KEY # Replace with actual VirusTotal API key
+
+alerting:
+  email:
+    enabled: False
+    to_email: email@any.com
+    smtp_server: smtp.any.com
+    smtp_port: 587
+    smtp_user: your_smtp_user
+    smtp_pass: your_smtp_password
+  slack:
+    enabled: False
+    webhook_url: YOUR_SLACK_WEBHOOK_URL # Replace with actual Slack webhook URL
+

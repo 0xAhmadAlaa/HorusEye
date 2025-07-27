@@ -1,0 +1,45 @@
+[
+  {
+    "name": "SSH Brute Force",
+    "log_type": "auth.log",
+    "pattern_type": "keyword",
+    "pattern": "Failed password",
+    "threshold": 5,
+    "window_seconds": 60,
+    "priority": "high",
+    "enabled": true,
+    "mitre_attack": "T1110.001"
+  },
+  {
+    "name": "Successful SSH Login",
+    "log_type": "auth.log",
+    "pattern_type": "keyword",
+    "pattern": "Accepted password",
+    "threshold": 1,
+    "priority": "medium",
+    "enabled": true,
+    "mitre_attack": "T1078"
+  },
+  {
+    "name": "Sudo Command Execution",
+    "log_type": "auth.log",
+    "pattern_type": "keyword",
+    "pattern": "sudo:",
+    "threshold": 1,
+    "priority": "low",
+    "enabled": true,
+    "mitre_attack": "T1548.003"
+  },
+  {
+    "name": "Apache 404 Errors",
+    "log_type": "apache",
+    "pattern_type": "regex",
+    "pattern": "\" 404 ",
+    "threshold": 10,
+    "window_seconds": 300,
+    "priority": "medium",
+    "enabled": true,
+    "mitre_attack": "T1190"
+  }
+]
+
