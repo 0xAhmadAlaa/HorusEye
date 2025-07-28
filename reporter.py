@@ -1,10 +1,10 @@
 
 ## HorusEye - Report Generator ##
 
-## Generates Markdown and JSON reports based on detections and IOCs. ## 
-
+## Generates Markdown and JSON reports based on detections and IOCs. ##
 
 import json
+import os
 from typing import List, Dict, Any
 from datetime import datetime
 
@@ -26,7 +26,7 @@ def generate_markdown_report(
             lines.append(f"- **MITRE ATT&CK**: {d.get('mitre_attack', 'N/A')}")
             lines.append("- **Matching Logs:**")
             for log in d["matching_logs"]:
-                timestamp = log["timestamp"].strftime("%Y-%m-%d %H:%M:%S") if log["timestamp"] else "N/A"
+                timestamp = log["timestamp"].strftime("%Y-%m-%d %H:%M:%S") if isinstance(log["timestamp"], datetime) else str(log["timestamp"])
                 lines.append(f"  - `{log['raw_log']}` (Timestamp: {timestamp})")
             lines.append("")
     else:
@@ -60,7 +60,7 @@ def generate_markdown_report(
         "- Conduct deeper forensic analysis if needed."
     ]
 
-    with open(output_path, "w") as file:
+    with open(output_path, "a") as file:
         file.write("\n".join(lines))
 
     print(f"[+] Markdown report written to: {output_path}")
@@ -99,8 +99,20 @@ def generate_json_report(
             "matching_logs": clean_logs
         })
 
+    
+    existing_reports = []
+    if os.path.exists(output_path):
+        try:
+            with open(output_path, "r") as file:
+                existing_reports = json.load(file)
+        except Exception:
+            existing_reports = []
+
+    
+    existing_reports.append(report)
+
+
     with open(output_path, "w") as file:
-        json.dump(report, file, indent=4)
+        json.dump(existing_reports, file, indent=2)
 
     print(f"[+] JSON report written to: {output_path}")
-
